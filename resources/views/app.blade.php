@@ -7,10 +7,8 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
-    <h1 class="text-3xl font-bold">
-        Hello world!
-    </h1>
+<body class="bg-slate-700">
+    <livewire:panel />
 </body>
 
 </html>
