@@ -19,10 +19,6 @@ class CreateTask extends Component
         $task = $this->form->store();
         $this->dispatch('task-created', task_data: $task)->to(Panel::class);
 
-        $this->js("confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 },
-          });");
+        $this->js("confetti()");
     }
 }
