@@ -18,7 +18,9 @@ class Panel extends Component
 
     public function mount()
     {
-        $this->loadTasks();
+        $this->todo = Task::select()->where('status', TaskStatus::Todo)->orderBy('deadline', 'desc')->get();
+        $this->progress = Task::select()->where('status', TaskStatus::Progress)->orderBy('deadline', 'desc')->get();
+        $this->done = Task::select()->where('status', TaskStatus::Done)->orderBy('deadline', 'desc')->get();
     }
 
     public function render()
@@ -27,10 +29,19 @@ class Panel extends Component
     }
 
     #[On('task-created')]
-    public function loadTasks(): void
+    public function addToList($task_data)
     {
-        $this->todo = Task::select()->where('status', TaskStatus::Todo)->orderBy('deadline', 'desc')->get();
-        $this->progress = Task::select()->where('status', TaskStatus::Progress)->orderBy('deadline', 'desc')->get();
-        $this->done = Task::select()->where('status', TaskStatus::Done)->orderBy('deadline', 'desc')->get();
+        $task = Task::find($task_data['id']);
+        switch ($task->status) {
+            case TaskStatus::Todo:
+                $this->todo->add($task);
+                break;
+            case TaskStatus::Progress:
+                $this->progress->add($task);
+                break;
+            case TaskStatus::Done:
+                $this->done->add($task);
+                break;
+        }
     }
 }

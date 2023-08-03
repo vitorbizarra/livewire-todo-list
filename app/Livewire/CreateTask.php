@@ -16,7 +16,13 @@ class CreateTask extends Component
 
     public function save()
     {
-        $this->form->store();
-        $this->dispatch('task-created')->to(Panel::class);
+        $task = $this->form->store();
+        $this->dispatch('task-created', task_data: $task)->to(Panel::class);
+
+        $this->js("confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+          });");
     }
 }

@@ -9,14 +9,14 @@ use Livewire\Form;
 
 class TaskForm extends Form
 {
-    #[Rule(['required', 'min:5'])]
+    #[Rule(['required', 'min:3'])]
     public ?string $title;
 
     #[Rule(['required', 'min:5', 'max:255'])]
     public ?string $description;
 
     #[Rule(['required'])]
-    public ?string $status;
+    public ?string $status = 'todo';
 
     #[Rule(['required',  'date'])]
     public ?string $deadline;
@@ -25,6 +25,6 @@ class TaskForm extends Form
     {
         $this->validate();
 
-        Task::create($this->all());
+        return Task::create($this->all());
     }
 }
